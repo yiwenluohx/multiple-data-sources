@@ -1,0 +1,28 @@
+server:
+  port: 8093
+
+spring:
+  #数据库连接
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    #自定义第一个数据源
+    datasource1:
+      url: jdbc:mysql://localhost:3306/eraser?useSSL=false&serverTimezone=GMT%2B8
+      username: root
+      password: passw@rd
+      initial-size: 3
+      min-idle: 1
+      max-active: 20
+      test-on-borrow: false
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    #自定义第二个数据源
+    datasource2:
+      url: jdbc:mysql://localhost:3306/ems-dev?useSSL=false&serverTimezone=GMT%2B8
+      username: root
+      password: passw@rd
+      initial-size: 3
+      min-idle: 1
+      max-active: 20
+      test-on-borrow: false
+      driver-class-name: com.mysql.cj.jdbc.Driver
+

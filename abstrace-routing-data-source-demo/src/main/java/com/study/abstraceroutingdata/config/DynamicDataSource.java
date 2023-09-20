@@ -21,7 +21,7 @@ import java.util.Map;
 @Primary
 public class DynamicDataSource extends AbstractRoutingDataSource {
 
-    private ThreadLocal<String> name = new ThreadLocal<String>();
+    public static  ThreadLocal<String> name = new ThreadLocal<String>();
 
     @Override
     protected Object determineCurrentLookupKey() {

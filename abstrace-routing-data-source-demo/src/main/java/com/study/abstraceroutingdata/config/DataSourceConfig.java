@@ -17,14 +17,14 @@ import javax.sql.DataSource;
 public class DataSourceConfig {
 
     @Bean(name = "dataSource1")
-    @ConfigurationProperties(prefix = "spring.datasource.dataSource1")
+    @ConfigurationProperties(prefix = "spring.datasource.datasource1")
     public DataSource dataSource1(){
         //底层会自动拿到spring.datasource中的配置，创建一个DruidDataSource
         return DruidDataSourceBuilder.create().build();
     }
 
     @Bean(name = "dataSource2")
-    @ConfigurationProperties(prefix = "spring.datasource.dataSource2")
+    @ConfigurationProperties(prefix = "spring.datasource.datasource2")
     public DataSource dataSource2(){
         //底层会自动拿到spring.datasource中的配置，创建一个DruidDataSource
         return DruidDataSourceBuilder.create().build();

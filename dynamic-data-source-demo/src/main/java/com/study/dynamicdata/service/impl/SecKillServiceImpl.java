@@ -1,11 +1,12 @@
 package com.study.dynamicdata.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import com.google.common.collect.Lists;
 import com.study.dynamicdata.dao.SeckillInfoMapper;
 import com.study.dynamicdata.model.SeckillInfo;
 import com.study.dynamicdata.service.SecKillService;
+import com.study.dynamicdata.service.SeckillSkuInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,10 @@ public class SecKillServiceImpl implements SecKillService {
     @Autowired
     private SeckillInfoMapper seckillInfoMapper;
 
+    @Autowired
+    private SeckillSkuInfoService skuInfoService;
+
+    @Override
     public List<SeckillInfo> selectById(String id) {
         if (StringUtils.isEmpty(id)) {
             return seckillInfoMapper.selectList(null);
@@ -39,8 +44,19 @@ public class SecKillServiceImpl implements SecKillService {
         return Lists.newArrayList(seckillInfo);
     }
 
+    /**
+     * 只要@DSTransactional注解下任一环节发生异常，则全局多数据源事务回滚
+     * @param entity
+     * @return
+     */
+    @Override
     @DS("write")
+    @DSTransactional
     public int insert(SeckillInfo entity) {
-        return seckillInfoMapper.insert(entity);
+        int res = seckillInfoMapper.insert(entity);
+        if (res > 0) {
+            skuInfoService.update("1");
+        }
+        return res;
     }
 }
